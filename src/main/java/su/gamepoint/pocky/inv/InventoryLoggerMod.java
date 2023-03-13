@@ -8,6 +8,7 @@ import net.minecraftforge.fml.config.ModConfig;
 import org.slf4j.Logger;
 import su.gamepoint.pocky.inv.config.InventoryConfig;
 import su.gamepoint.pocky.inv.events.CommandManager;
+import su.gamepoint.pocky.inv.events.PlayerDeadEvent;
 import su.gamepoint.pocky.inv.events.PlayerTickEvent;
 
 @Mod(InventoryLoggerMod.MODID)
@@ -15,7 +16,7 @@ public class InventoryLoggerMod {
 
     public static final String MODID = "inv_logger";
 
-    private static final Logger LOGGER = LogUtils.getLogger();
+    public static final Logger LOGGER = LogUtils.getLogger();
 
     public InventoryLoggerMod() {
 
@@ -24,6 +25,7 @@ public class InventoryLoggerMod {
 
         MinecraftForge.EVENT_BUS.register(new CommandManager());
         MinecraftForge.EVENT_BUS.register(new PlayerTickEvent());
+        MinecraftForge.EVENT_BUS.register(new PlayerDeadEvent());
 
         MinecraftForge.EVENT_BUS.register(this);
     }

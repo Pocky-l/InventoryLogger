@@ -8,6 +8,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import su.gamepoint.pocky.inv.config.InventoryConfig;
 import su.gamepoint.pocky.inv.data.InventoryData;
+import su.gamepoint.pocky.inv.utils.InventoryUtil;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -29,6 +30,7 @@ public class PlayerTickEvent {
      */
     @SubscribeEvent
     public void onTickPlayerTick(TickEvent.PlayerTickEvent event) {
+        if (!InventoryConfig.general.tickSaveEnabled.get()) return;
         if (event.side.isServer()) {
             ServerPlayer player = (ServerPlayer) event.player;
 
@@ -47,39 +49,12 @@ public class PlayerTickEvent {
     }
 
     private void saveInventory(ServerPlayer player) {
-        boolean isEmpty = true;
 
         Inventory inv = player.getInventory();
 
-        for (ItemStack stack : inv.items) {
-            if (!stack.isEmpty()) {
-                isEmpty = false;
-            }
-        }
-        for (ItemStack stack : inv.offhand) {
-            if (!stack.isEmpty()) {
-                isEmpty = false;
-            }
-        }
-        for (ItemStack stack : inv.armor) {
-            if (!stack.isEmpty()) {
-                isEmpty = false;
-            }
-        }
-        if (isEmpty) return;
+        if (InventoryUtil.isEmpty(inv)) return;
 
-        Map<Integer, ItemStack> itemStackMap = new HashMap<>();
-
-        for (int i = 0; i < inv.items.size(); i++) {
-            itemStackMap.put(i, inv.items.get(i));
-        }
-
-        itemStackMap.put(100, inv.getArmor(0));
-        itemStackMap.put(101, inv.getArmor(1));
-        itemStackMap.put(102, inv.getArmor(2));
-        itemStackMap.put(103, inv.getArmor(3));
-
-        itemStackMap.put(-106, inv.offhand.get(0));
+        Map<Integer, ItemStack> itemStackMap = InventoryUtil.collectInventory(inv);
 
         var data = InventoryData.encode(itemStackMap);
 
@@ -88,5 +63,6 @@ public class PlayerTickEvent {
         }
         lastInventory.put(player, data);
         data.save(player.getUUID());
+        InventoryUtil.debugMessageSaveInv(player);
     }
 }

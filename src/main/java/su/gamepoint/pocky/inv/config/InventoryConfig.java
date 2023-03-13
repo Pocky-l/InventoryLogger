@@ -18,14 +18,24 @@ public class InventoryConfig {
 
     public static class General {
 
+        public final ForgeConfigSpec.BooleanValue tickSaveEnabled;
         public final ForgeConfigSpec.LongValue preservationPeriod;
+        public final ForgeConfigSpec.BooleanValue deadSaveEnabled;
 
         General() {
             COMMON_BUILDER.push("general");
 
+            this.tickSaveEnabled = COMMON_BUILDER
+                    .comment("true - saves inventory every N seconds.")
+                    .define("tickSaveEnabled", true);
+
             this.preservationPeriod = COMMON_BUILDER
                     .comment("Determines the frequency at which inventory will be saved. 60 - every minute, -1 - never.")
                     .defineInRange("preservationPeriod",60, -1, Long.MAX_VALUE);
+
+            this.deadSaveEnabled = COMMON_BUILDER
+                    .comment("true - saves inventory on death")
+                    .define("deadSaveEnabled", true);
 
             COMMON_BUILDER.pop();
         }

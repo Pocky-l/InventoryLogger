@@ -82,7 +82,7 @@ public class InventoryCommand {
                 isFound = true;
                 source.getPlayerOrException()
                         .displayClientMessage(new TextComponent("§3" + file.getName()
-                                .replace("\\.json", "")), false);
+                                .replace(".json", "")), false);
             }
         }
 
