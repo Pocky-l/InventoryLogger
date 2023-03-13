@@ -21,7 +21,7 @@ public class InventoryLoggerMod {
     public InventoryLoggerMod() {
 
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON,
-                InventoryConfig.COMMON_CONFIG, "inventory\\InventoryLogger.toml");
+                InventoryConfig.COMMON_CONFIG, "inventory/InventoryLogger.toml");
 
         MinecraftForge.EVENT_BUS.register(new CommandManager());
         MinecraftForge.EVENT_BUS.register(new PlayerTickEvent());
