@@ -6,7 +6,7 @@ import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.commands.arguments.EntityArgument;
-import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import su.gamepoint.pocky.inv.data.InventoryData;
 import su.gamepoint.pocky.inv.io.JsonFileHandler;
@@ -52,7 +52,7 @@ public class InventoryCommand {
 
         if (invData == null) {
             source.getPlayerOrException().displayClientMessage(
-                    new TextComponent("§cOops! File not found or was corrupted."),
+                    Component.literal("§cOops! File not found or was corrupted."),
                     false
             );
             return 0;
@@ -60,7 +60,7 @@ public class InventoryCommand {
 
         target.getInventory().replaceWith(invData.getInventory(target));
         target.displayClientMessage(
-                new TextComponent("§aSuccess! Your inventory has been replaced with " + date),
+                Component.literal("§aSuccess! Your inventory has been replaced with " + date),
                 false
         );
         return 1;
@@ -73,7 +73,7 @@ public class InventoryCommand {
 
 
         source.getPlayerOrException()
-                .displayClientMessage(new TextComponent("§aHere is your list of files:"), false);
+                .displayClientMessage(Component.literal("§aHere is your list of files:"), false);
 
         boolean isFound = false;
 
@@ -81,14 +81,14 @@ public class InventoryCommand {
             if (file.isFile() && file.getName().startsWith(approximateName)) {
                 isFound = true;
                 source.getPlayerOrException()
-                        .displayClientMessage(new TextComponent("§3" + file.getName()
+                        .displayClientMessage(Component.literal("§3" + file.getName()
                                 .replace(".json", "")), false);
             }
         }
 
         if (!isFound) {
             source.getPlayerOrException().displayClientMessage(
-                    new TextComponent("§cOops! No file was found."),
+                    Component.literal("§cOops! No file was found."),
                     false
             );
         }

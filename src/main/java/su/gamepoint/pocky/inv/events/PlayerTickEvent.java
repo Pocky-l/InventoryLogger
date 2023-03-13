@@ -22,7 +22,9 @@ public class PlayerTickEvent {
     Map<ServerPlayer, Long> map = new HashMap<>();
     Map<ServerPlayer, InventoryData> lastInventory = new HashMap<>();
 
-    private static final Long PERIOD = InventoryConfig.general.preservationPeriod.get();
+    public static boolean tickSaveEnabled = false;
+
+    public static Long PERIOD = 60L;
 
     /**
      * Раз в какое-то время даёт сигнал сохранить инвентарь в файл
@@ -30,7 +32,7 @@ public class PlayerTickEvent {
      */
     @SubscribeEvent
     public void onTickPlayerTick(TickEvent.PlayerTickEvent event) {
-        if (!InventoryConfig.general.tickSaveEnabled.get()) return;
+        if (!tickSaveEnabled) return;
         if (event.side.isServer()) {
             ServerPlayer player = (ServerPlayer) event.player;
 

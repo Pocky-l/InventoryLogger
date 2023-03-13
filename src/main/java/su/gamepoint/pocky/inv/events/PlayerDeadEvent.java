@@ -13,9 +13,11 @@ import su.gamepoint.pocky.inv.utils.InventoryUtil;
 @Mod.EventBusSubscriber
 public class PlayerDeadEvent {
 
+    public static boolean deadSaveEnabled = false;
+
     @SubscribeEvent
     public void onLivingDeath(LivingDeathEvent event) {
-        if (!InventoryConfig.general.deadSaveEnabled.get()) return;
+        if (!deadSaveEnabled) return;
         if (event.getEntity() instanceof Player) {
             ServerPlayer player = (ServerPlayer) event.getEntity();
             saveInventory(player);
