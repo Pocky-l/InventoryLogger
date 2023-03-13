@@ -1,8 +1,8 @@
 package su.gamepoint.pocky.inv.events;
 
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -19,8 +19,8 @@ public class PlayerTickEvent {
     /**
      * ServerPlayer - игрок. Long - количество тиков.
      */
-    Map<ServerPlayer, Long> map = new HashMap<>();
-    Map<ServerPlayer, InventoryData> lastInventory = new HashMap<>();
+    Map<ServerPlayerEntity, Long> map = new HashMap<>();
+    Map<ServerPlayerEntity, InventoryData> lastInventory = new HashMap<>();
 
     private static final Long PERIOD = InventoryConfig.general.preservationPeriod.get();
 
@@ -32,7 +32,7 @@ public class PlayerTickEvent {
     public void onTickPlayerTick(TickEvent.PlayerTickEvent event) {
         if (!InventoryConfig.general.tickSaveEnabled.get()) return;
         if (event.side.isServer()) {
-            ServerPlayer player = (ServerPlayer) event.player;
+            ServerPlayerEntity player = (ServerPlayerEntity) event.player;
 
             if (!map.containsKey(player)) {
                 map.put(player, 0L);
@@ -48,9 +48,9 @@ public class PlayerTickEvent {
         }
     }
 
-    private void saveInventory(ServerPlayer player) {
+    private void saveInventory(ServerPlayerEntity player) {
 
-        Inventory inv = player.getInventory();
+        PlayerInventory inv = player.inventory;
 
         if (InventoryUtil.isEmpty(inv)) return;
 

@@ -1,8 +1,8 @@
 package su.gamepoint.pocky.inv.events;
 
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.entity.player.Player;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -16,14 +16,14 @@ public class PlayerDeadEvent {
     @SubscribeEvent
     public void onLivingDeath(LivingDeathEvent event) {
         if (!InventoryConfig.general.deadSaveEnabled.get()) return;
-        if (event.getEntity() instanceof Player) {
-            ServerPlayer player = (ServerPlayer) event.getEntity();
+        if (event.getEntity() instanceof PlayerEntity) {
+            ServerPlayerEntity player = (ServerPlayerEntity) event.getEntity();
             saveInventory(player);
         }
     }
 
-    private void saveInventory(ServerPlayer player) {
-        Inventory inv = player.getInventory();
+    private void saveInventory(ServerPlayerEntity player) {
+        PlayerInventory inv = player.inventory;
         if (InventoryUtil.isEmpty(inv)) return;
 
         InventoryData.encode(InventoryUtil.collectInventory(inv)).save(player.getUUID());

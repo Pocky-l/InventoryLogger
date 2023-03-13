@@ -1,10 +1,10 @@
 package su.gamepoint.pocky.inv.data;
 
 import com.google.gson.JsonObject;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraftforge.common.util.JsonUtils;
 import su.gamepoint.pocky.inv.io.JsonFileHandler;
 
@@ -35,8 +35,8 @@ public class InventoryData implements Serializable {
         return map;
     }
 
-    public Inventory getInventory(Player player) {
-        Inventory inv = new Inventory(player);
+    public PlayerInventory getInventory(ServerPlayerEntity player) {
+        PlayerInventory inv = new PlayerInventory(player);
         data.forEach(e -> {
             if (e.getIndex() == 100) {
                 inv.armor.set(0, ItemStack.of(getTag(e.getNbt())));
@@ -60,7 +60,7 @@ public class InventoryData implements Serializable {
         List<ItemData> result = new ArrayList<>();
 
         map.forEach((i, s) -> {
-            CompoundTag tag = new CompoundTag();
+            CompoundNBT tag = new CompoundNBT();
             s.save(tag);
             result.add(new ItemData(i, tag.toString()));
         });
@@ -71,7 +71,7 @@ public class InventoryData implements Serializable {
         return data;
     }
 
-    private CompoundTag getTag(String nbt) {
+    private CompoundNBT getTag(String nbt) {
         var jsonObject = new JsonObject();
         jsonObject.addProperty("nbt", nbt);
 

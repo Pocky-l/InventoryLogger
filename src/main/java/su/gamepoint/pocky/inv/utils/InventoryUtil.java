@@ -1,8 +1,8 @@
 package su.gamepoint.pocky.inv.utils;
 
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.item.ItemStack;
 import su.gamepoint.pocky.inv.InventoryLoggerMod;
 
 import java.time.LocalDateTime;
@@ -12,7 +12,7 @@ import java.util.Map;
 
 public class InventoryUtil {
 
-    public static Map<Integer, ItemStack> collectInventory(Inventory inventory) {
+    public static Map<Integer, ItemStack> collectInventory(PlayerInventory inventory) {
 
         Map<Integer, ItemStack> itemStackMap = new HashMap<>();
 
@@ -29,7 +29,7 @@ public class InventoryUtil {
         return itemStackMap;
     }
 
-    public static boolean isEmpty(Inventory inventory) {
+    public static boolean isEmpty(PlayerInventory inventory) {
         boolean isEmpty = true;
 
         for (ItemStack stack : inventory.items) {
@@ -50,7 +50,7 @@ public class InventoryUtil {
         return isEmpty;
     }
 
-    public static void debugMessageSaveInv(ServerPlayer player) {
+    public static void debugMessageSaveInv(ServerPlayerEntity player) {
         LocalDateTime now = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd-HH-mm-ss");
         String formattedDateTime = now.format(formatter);

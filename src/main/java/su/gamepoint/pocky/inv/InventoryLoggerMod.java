@@ -1,11 +1,11 @@
 package su.gamepoint.pocky.inv;
 
-import com.mojang.logging.LogUtils;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
-import org.slf4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import su.gamepoint.pocky.inv.config.InventoryConfig;
 import su.gamepoint.pocky.inv.events.CommandManager;
 import su.gamepoint.pocky.inv.events.PlayerDeadEvent;
@@ -16,7 +16,7 @@ public class InventoryLoggerMod {
 
     public static final String MODID = "inv_logger";
 
-    public static final Logger LOGGER = LogUtils.getLogger();
+    public static final Logger LOGGER = LogManager.getLogger("Inventory");
 
     public InventoryLoggerMod() {
 
