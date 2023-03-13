@@ -15,7 +15,7 @@ plugins {
 apply plugin: 'net.minecraftforge.gradle'
 
 
-version = '1.18.2-1.1.2'
+version = '1.19.2-1.1.1'
 group = 'su.gamepoint.pocky.inv'
 archivesBaseName = 'InventoryLogger'
 
