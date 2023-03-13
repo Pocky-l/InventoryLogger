@@ -20,10 +20,11 @@ public class InventoryUtil {
             itemStackMap.put(i, inventory.items.get(i));
         }
 
-        itemStackMap.put(100, inventory.getArmor(0));
-        itemStackMap.put(101, inventory.getArmor(1));
-        itemStackMap.put(102, inventory.getArmor(2));
-        itemStackMap.put(103, inventory.getArmor(3));
+        int slotIndex = 100;
+        for (ItemStack itemStack : inventory.armor) {
+            itemStackMap.put(slotIndex, itemStack);
+            slotIndex++;
+        }
 
         itemStackMap.put(-106, inventory.offhand.get(0));
         return itemStackMap;
