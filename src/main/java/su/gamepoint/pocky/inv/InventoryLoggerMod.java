@@ -2,6 +2,8 @@ package su.gamepoint.pocky.inv;
 
 import com.mojang.logging.LogUtils;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.server.ServerStartedEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
@@ -28,5 +30,12 @@ public class InventoryLoggerMod {
         MinecraftForge.EVENT_BUS.register(new PlayerDeadEvent());
 
         MinecraftForge.EVENT_BUS.register(this);
+    }
+
+    @SubscribeEvent
+    public void onServerStarted(ServerStartedEvent event) {
+        PlayerDeadEvent.deadSaveEnabled = InventoryConfig.general.deadSaveEnabled.get();
+        PlayerTickEvent.tickSaveEnabled = InventoryConfig.general.tickSaveEnabled.get();
+        PlayerTickEvent.PERIOD = InventoryConfig.general.preservationPeriod.get();
     }
 }
