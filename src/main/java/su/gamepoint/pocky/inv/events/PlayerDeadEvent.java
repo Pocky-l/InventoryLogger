@@ -4,6 +4,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
+import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import su.gamepoint.pocky.inv.config.InventoryConfig;
@@ -13,7 +14,7 @@ import su.gamepoint.pocky.inv.utils.InventoryUtil;
 @Mod.EventBusSubscriber
 public class PlayerDeadEvent {
 
-    @SubscribeEvent
+    @SubscribeEvent(priority = EventPriority.HIGHEST)
     public void onLivingDeath(LivingDeathEvent event) {
         if (!InventoryConfig.general.deadSaveEnabled.get()) return;
         if (event.getEntity() instanceof Player) {
