@@ -63,7 +63,7 @@ public class PlayerTickEvent {
             return;
         }
         lastInventory.put(player, data);
-        data.save(player.getUUID());
+        data.save(player.getUUID(), false);
         InventoryUtil.debugMessageSaveInv(player);
     }
 }

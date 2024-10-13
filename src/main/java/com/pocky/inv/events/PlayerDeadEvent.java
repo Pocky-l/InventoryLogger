@@ -20,15 +20,15 @@ public class PlayerDeadEvent {
         if (!deadSaveEnabled) return;
         if (event.getEntity() instanceof Player) {
             ServerPlayer player = (ServerPlayer) event.getEntity();
-            saveInventory(player);
+            saveInventory(player, true);
         }
     }
 
-    private void saveInventory(ServerPlayer player) {
+    private void saveInventory(ServerPlayer player, boolean isPlayerDead) {
         Inventory inv = player.getInventory();
         if (InventoryUtil.isEmpty(inv)) return;
 
-        InventoryData.encode(InventoryUtil.collectInventory(inv)).save(player.getUUID());
+        InventoryData.encode(InventoryUtil.collectInventory(inv)).save(player.getUUID(), isPlayerDead);
         InventoryUtil.debugMessageSaveInv(player);
     }
 }
