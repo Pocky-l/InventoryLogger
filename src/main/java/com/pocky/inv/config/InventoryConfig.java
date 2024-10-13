@@ -1,4 +1,4 @@
-package su.gamepoint.pocky.inv.config;
+package com.pocky.inv.config;
 
 import net.minecraftforge.common.ForgeConfigSpec;
 

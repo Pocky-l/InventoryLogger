@@ -1,6 +1,10 @@
-package su.gamepoint.pocky.inv;
+package com.pocky.inv;
 
 import com.mojang.logging.LogUtils;
+import com.pocky.inv.config.InventoryConfig;
+import com.pocky.inv.events.CommandManager;
+import com.pocky.inv.events.PlayerDeadEvent;
+import com.pocky.inv.events.PlayerTickEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.server.ServerStartedEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -8,10 +12,6 @@ import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import org.slf4j.Logger;
-import su.gamepoint.pocky.inv.config.InventoryConfig;
-import su.gamepoint.pocky.inv.events.CommandManager;
-import su.gamepoint.pocky.inv.events.PlayerDeadEvent;
-import su.gamepoint.pocky.inv.events.PlayerTickEvent;
 
 @Mod(InventoryLoggerMod.MODID)
 public class InventoryLoggerMod {

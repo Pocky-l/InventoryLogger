@@ -1,4 +1,4 @@
-package su.gamepoint.pocky.inv.io;
+package com.pocky.inv.io;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;

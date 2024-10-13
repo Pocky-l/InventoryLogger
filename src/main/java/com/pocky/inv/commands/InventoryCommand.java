@@ -1,4 +1,4 @@
-package su.gamepoint.pocky.inv.commands;
+package com.pocky.inv.commands;
 
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.StringArgumentType;
@@ -8,8 +8,8 @@ import net.minecraft.commands.Commands;
 import net.minecraft.commands.arguments.EntityArgument;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
-import su.gamepoint.pocky.inv.data.InventoryData;
-import su.gamepoint.pocky.inv.io.JsonFileHandler;
+import com.pocky.inv.data.InventoryData;
+import com.pocky.inv.io.JsonFileHandler;
 
 import java.io.File;
 

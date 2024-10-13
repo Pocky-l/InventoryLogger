@@ -1,4 +1,4 @@
-package su.gamepoint.pocky.inv.data;
+package com.pocky.inv.data;
 
 import com.google.gson.JsonObject;
 import net.minecraft.nbt.CompoundTag;
@@ -6,7 +6,7 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.util.JsonUtils;
-import su.gamepoint.pocky.inv.io.JsonFileHandler;
+import com.pocky.inv.io.JsonFileHandler;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;

@@ -1,4 +1,4 @@
-package su.gamepoint.pocky.inv.data;
+package com.pocky.inv.data;
 
 import java.util.Objects;
 
