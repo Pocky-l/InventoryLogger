@@ -20,11 +20,17 @@ public class InventoryData implements Serializable {
      */
     List<ItemData> data = new ArrayList<>();
 
-    public void save(UUID playerUUID) {
+    public void save(UUID playerUUID, boolean isPlayerDead) {
         LocalDateTime now = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd-HH-mm-ss");
         String formattedDateTime = now.format(formatter);
-        new JsonFileHandler<>(this).save("inventory/" + playerUUID.toString() + "/", formattedDateTime);
+        String fileName;
+        if (isPlayerDead) {
+            fileName = formattedDateTime + "-death";
+        } else {
+            fileName = formattedDateTime;
+        }
+        new JsonFileHandler<>(this).save("inventory/" + playerUUID.toString() + "/", fileName);
     }
 
     public Map<Integer, ItemStack> decode() {
