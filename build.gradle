@@ -15,8 +15,8 @@ plugins {
 apply plugin: 'net.minecraftforge.gradle'
 
 
-version = '1.19.2-1.1.2'
-group = 'su.gamepoint.pocky.inv'
+version = '1.20.1-1.2.0'
+group = 'com.pocky.inv'
 archivesBaseName = 'InventoryLogger'
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(17)
@@ -24,7 +24,7 @@ java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 println "Java: ${System.getProperty 'java.version'}, JVM: ${System.getProperty 'java.vm.version'} (${System.getProperty 'java.vendor'}), Arch: ${System.getProperty 'os.arch'}"
 minecraft {
 
-    mappings channel: 'official', version: '1.19.2'
+    mappings channel: 'official', version: '1.20.1'
 
     runs {
         client {
@@ -101,7 +101,7 @@ repositories {
 
 dependencies {
 
-    minecraft 'net.minecraftforge:forge:1.19.2-43.2.6'
+    minecraft 'net.minecraftforge:forge:1.20.1-47.3.0'
 
 }
 

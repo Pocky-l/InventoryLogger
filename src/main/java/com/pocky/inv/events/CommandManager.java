@@ -1,11 +1,11 @@
-package su.gamepoint.pocky.inv.events;
+package com.pocky.inv.events;
 
 import com.mojang.brigadier.CommandDispatcher;
+import com.pocky.inv.commands.InventoryCommand;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import su.gamepoint.pocky.inv.commands.InventoryCommand;
 
 @Mod.EventBusSubscriber
 public class CommandManager {
