@@ -23,6 +23,7 @@ Welcome to **Inventory Logger**, a mod built for **Minecraft Forge** that helps 
 |--------|-------------|
 | `/inventory set <player> <date>` | Replaces the player’s inventory with the saved state from the given date (`yyyy-MM-dd-HH-mm-ss`). |
 | `/inventory list <player> [partial-date]` | Lists all available inventory saves. You can enter partial dates like `2025-06` to filter by month. |
+| `/inventory view <player> <date>` | Shows you the players inventory on the given date (`yyyy-MM-dd-HH-mm-ss`). |
 
 > ℹ️ You can **click on inventory files** in the chat to instantly preview them in a fake chest GUI (read-only).
 
