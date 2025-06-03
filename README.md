@@ -45,7 +45,6 @@ Here’s what’s coming next:
 - [x] Offline Player Support(keeping player tab complete if they are still online)
 - [ ] Configurable backup triggers (death, join, leave, timed)
 - [ ] Inventory backup retention (limit max saves per player)
-- [ ] Offline player support for all features
 - [ ] Restore inventory to *another* player
 - [ ] Sync with remote storage / FTP or Discord Webhooks
 - [ ] Config option to auto-backup Ender Chest
