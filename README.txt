@@ -41,7 +41,8 @@ Each file includes complete inventory state, armor, offhand, and other data enco
 
 Here’s what’s coming next:
 
-- [x] Offline Player Support
+- [x] Add View button to list
+- [x] Offline Player Support(keeping player tab complete if they are still online)
 - [ ] Configurable backup triggers (death, join, leave, timed)
 - [ ] Inventory backup retention (limit max saves per player)
 - [ ] Offline player support for all features
