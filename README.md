@@ -9,7 +9,7 @@ Welcome to **Inventory Logger**, a mod built for **Minecraft Forge** that helps 
 
 ## 📦 Features
 
-- 📂 **Automatic inventory backup system** (configurable intervals planned)
+- 📂 **Automatic inventory backup system** 
 - 🧾 **Readable JSON format** for inventory snapshots
 - 💬 **Simple commands** to restore or inspect past inventories
 - 🧍 Works for **any player**, not just the current one
