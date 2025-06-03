@@ -44,6 +44,7 @@ Here’s what’s coming next:
 
 - [x] Add View button to list
 - [x] Offline Player Support(keeping player tab complete if they are still online)
+- [ ] Tabcomplete for inventory dates for view and set
 - [ ] Configurable backup triggers (death, join, leave, timed)
 - [ ] Inventory backup retention (limit max saves per player)
 - [ ] Restore inventory to *another* player
