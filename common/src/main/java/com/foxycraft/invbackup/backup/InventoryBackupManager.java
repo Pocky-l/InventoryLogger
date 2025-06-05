@@ -1,6 +1,7 @@
 package com.foxycraft.invbackup.backup;
 
-import com.foxycraft.invbackup.config.BackupConfig;
+
+import com.foxycraft.invbackup.configs.ConfigHolder;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
@@ -83,7 +84,7 @@ public class InventoryBackupManager {
         return backups;
     }
     private static void cleanOldBackups(UUID playerUUID) {
-        int maxBackups = BackupConfig.maxBackupsPerPlayer;
+        int maxBackups = ConfigHolder.getConfig().maxBackupsPerPlayer();
         if (maxBackups < 0) {
             // -1 means infinite backups, no cleanup needed
             return;

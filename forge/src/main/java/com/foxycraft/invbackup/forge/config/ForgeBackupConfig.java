@@ -1,14 +1,9 @@
-package com.foxycraft.invbackup.config;
+package com.foxycraft.invbackup.forge.config;
 
-import com.sun.jdi.BooleanValue;
-import dev.architectury.utils.value.IntValue;
-import eu.midnightdust.lib.config.MidnightConfig;
+import com.foxycraft.invbackup.configs.IBackupConfig;
 import eu.midnightdust.lib.config.MidnightConfig;
 
-import static com.sun.jna.Native.register;
-
-
-public class BackupConfig extends MidnightConfig {
+public class ForgeBackupConfig extends MidnightConfig implements IBackupConfig {
     public static final String CATEGORY_GENERAL = "general";
 
     @Comment(category = CATEGORY_GENERAL)
@@ -26,8 +21,25 @@ public class BackupConfig extends MidnightConfig {
     @Entry(category = CATEGORY_GENERAL, name = "Max backups per player")
     public static int maxBackupsPerPlayer = 50;
 
-    static {
-        // Required to load/save config automatically
-        register("invbackup");
+    // Remove static block entirely
+
+    @Override
+    public boolean backupOnDeath() {
+        return ForgeBackupConfig.backupOnDeath;
+    }
+
+    @Override
+    public boolean backupOnJoin() {
+        return ForgeBackupConfig.backupOnJoin;
+    }
+
+    @Override
+    public int backupIntervalTicks() {
+        return ForgeBackupConfig.backupIntervalTicks;
+    }
+
+    @Override
+    public int maxBackupsPerPlayer() {
+        return ForgeBackupConfig.maxBackupsPerPlayer;
     }
 }
