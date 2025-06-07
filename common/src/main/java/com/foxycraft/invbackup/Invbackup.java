@@ -1,7 +1,6 @@
 package com.foxycraft.invbackup;
 
 
-import com.foxycraft.invbackup.command.InventoryListCommand;
 import com.foxycraft.invbackup.event.PeriodicBackupTickEvent;
 import com.foxycraft.invbackup.event.PlayerJoinBackupEvent;
 import net.minecraft.server.MinecraftServer;

@@ -147,7 +147,11 @@ public class InventoryBackupManager {
             }
         }
 
-        // Restore modded capabilities if any
+        // Restore modded capabilities if FORGE
+        // This may cause issues with Certain mods as IT RESTORES ALL FORGECAPS
+        // FABRIC NOT SUPPORTED AT THIS TIME.
+        // WANT TO CLEANUP THE FORGECAPS TO LOWER FILE SIZES.
+
         if (tag.contains("ForgeCaps")) {
             CompoundTag currentData = new CompoundTag();
             player.saveWithoutId(currentData);

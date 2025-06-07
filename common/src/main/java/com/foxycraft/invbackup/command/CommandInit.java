@@ -7,6 +7,6 @@ import net.minecraft.commands.CommandSourceStack;
 public class CommandInit {
 
     public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
-        InventoryListCommand.register(dispatcher);
+        InventoryBackupCommands.register(dispatcher);
     }
 }
