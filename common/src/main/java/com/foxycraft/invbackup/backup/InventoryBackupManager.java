@@ -70,7 +70,8 @@ public class InventoryBackupManager {
     }
 
     public static List<PlayerBackup> getBackupsForPlayer(UUID playerUUID) {
-        File[] files = BACKUP_DIR.listFiles((dir, name) -> name.startsWith(playerUUID.toString()));
+        File playerDir = new File(BACKUP_DIR, playerUUID.toString());
+        File[] files = playerDir.listFiles((dir, name) -> name.endsWith(".nbt")); // => C:/.../invbackup/<UUID>/save_<timestamp>.nbt
         if (files == null) return Collections.emptyList();
 
         List<PlayerBackup> backups = new ArrayList<>();
@@ -78,11 +79,15 @@ public class InventoryBackupManager {
             try {
                 CompoundTag tag = readCompressed(file);
                 backups.add(new PlayerBackup(file, tag));
-            } catch (IOException ignored) {}
+            } catch (IOException e) {
+                System.err.println("[InvBackup] Failed to read: " + file.getName());
+                e.printStackTrace();
+            }
         }
         backups.sort(Comparator.comparing(PlayerBackup::getTimestamp).reversed());
         return backups;
     }
+
     private static void cleanOldBackups(UUID playerUUID) {
         int maxBackups = ConfigHolder.getConfig().maxBackupsPerPlayer();
         if (maxBackups < 0) {

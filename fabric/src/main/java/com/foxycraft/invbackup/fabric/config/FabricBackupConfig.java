@@ -7,6 +7,9 @@ import static com.sun.jna.Native.register;
 
 
 public class FabricBackupConfig extends MidnightConfig implements IBackupConfig {
+    public static void init(String modid) {
+        MidnightConfig.init(modid, FabricBackupConfig.class);
+    }
     public static final String CATEGORY_GENERAL = "general";
 
     @Comment(category = CATEGORY_GENERAL)
@@ -48,4 +51,5 @@ public class FabricBackupConfig extends MidnightConfig implements IBackupConfig 
     public int maxBackupsPerPlayer() {
         return FabricBackupConfig.maxBackupsPerPlayer;
     }
+
 }
