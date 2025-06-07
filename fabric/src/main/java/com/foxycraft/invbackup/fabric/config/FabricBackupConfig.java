@@ -27,10 +27,7 @@ public class FabricBackupConfig extends MidnightConfig implements IBackupConfig 
     @Entry(category = CATEGORY_GENERAL, name = "Max backups per player")
     public static int maxBackupsPerPlayer = 50;
 
-    static {
-        // Required to load/save config automatically
-        register("invbackup");
-    }
+
 
     @Override
     public boolean backupOnDeath() {

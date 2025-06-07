@@ -21,7 +21,6 @@ public class ForgeBackupConfig extends MidnightConfig implements IBackupConfig {
     @Entry(category = CATEGORY_GENERAL, name = "Max backups per player")
     public static int maxBackupsPerPlayer = 50;
 
-    // Remove static block entirely
 
     @Override
     public boolean backupOnDeath() {

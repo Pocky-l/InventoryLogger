@@ -47,7 +47,7 @@ public class InventoryBackupCommands {
             return 0;
         }
 
-        // Use your manager class
+
         List<PlayerBackup> backups = InventoryBackupManager.getBackupsForPlayer(uuid);
         //source.sendSuccess(() -> Component.literal("[Debug] Loaded " + backups.size() + " backups via InventoryBackupManager."), false);
 

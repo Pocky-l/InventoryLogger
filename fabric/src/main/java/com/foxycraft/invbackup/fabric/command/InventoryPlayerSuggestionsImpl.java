@@ -1,5 +1,6 @@
 package com.foxycraft.invbackup.fabric.command;
 
+import com.foxycraft.invbackup.Invbackup;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
 
