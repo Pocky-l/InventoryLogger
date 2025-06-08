@@ -1,3 +1,11 @@
-# Default ignored files
-/shelf/
-/workspace.xml
+# Ignore Gradle build system cache
+.gradle/
+**/.gradle/
+
+# Ignore build output directories
+build/
+**/build/
+
+# IntelliJ-specific ignored files (already present or implied)
+.idea/shelf/
+.idea/workspace.xml
