@@ -5,6 +5,7 @@ import com.foxycraft.invbackup.backup.PlayerBackup;
 import com.foxycraft.invbackup.command.suggestions.InventoryPlayerSuggestions;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.StringArgumentType;
+import dev.JustRed23.abcm.exception.ConfigInitException;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.network.chat.Component;
@@ -35,7 +36,19 @@ public class InventoryBackupCommands {
                                             String playerName = StringArgumentType.getString(ctx, "player");
                                             String timestamp = StringArgumentType.getString(ctx, "timestamp");
                                             return executeRestore(ctx.getSource(), playerName, timestamp);
-                                        })))));
+                                        }))))
+                .then(Commands.literal("reload")
+                        .executes(ctx -> {
+                            try {
+                                com.foxycraft.invbackup.Invbackup.reloadConfig();
+                            } catch (ConfigInitException e) {
+                                throw new RuntimeException(e);
+                            }
+                            ctx.getSource().sendSuccess(() -> Component.literal("Inventory Backup config reloaded."), false);
+                            return 1;
+                        }))
+        );
+
     }
 
     private static int execute(CommandSourceStack source, String playerName, String filter) {

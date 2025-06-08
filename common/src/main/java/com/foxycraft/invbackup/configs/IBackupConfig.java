@@ -5,4 +5,5 @@ public interface IBackupConfig {
     boolean backupOnJoin();
     int backupIntervalTicks();
     int maxBackupsPerPlayer();
+    boolean Debug();
 }

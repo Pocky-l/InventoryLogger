@@ -3,7 +3,6 @@ package com.foxycraft.invbackup.forge;
 import com.foxycraft.invbackup.Invbackup;
 import com.foxycraft.invbackup.command.CommandInit;
 import com.foxycraft.invbackup.configs.ConfigHolder;
-import com.foxycraft.invbackup.forge.config.ForgeBackupConfig;
 import dev.architectury.platform.forge.EventBuses;
 import eu.midnightdust.lib.config.MidnightConfig;
 import net.minecraftforge.common.MinecraftForge;
