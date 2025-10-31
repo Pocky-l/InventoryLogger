@@ -1,12 +1,9 @@
-package com.pocky.inv.utils;
+package com.pocky.invbackups.utils;
 
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
-import com.pocky.inv.InventoryLoggerMod;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -26,6 +23,21 @@ public class InventoryUtil {
         itemStackMap.put(103, inventory.getArmor(3));
 
         itemStackMap.put(-106, inventory.offhand.get(0));
+        return itemStackMap;
+    }
+
+    /**
+     * Collect all inventory including Curios slots if available
+     */
+    public static Map<Integer, ItemStack> collectInventory(ServerPlayer player) {
+        Map<Integer, ItemStack> itemStackMap = collectInventory(player.getInventory());
+
+        // Add Curios items if Curios is loaded
+        if (CuriosHelper.isCuriosLoaded()) {
+            Map<Integer, ItemStack> curiosItems = CuriosHelper.collectCuriosItems(player);
+            itemStackMap.putAll(curiosItems);
+        }
+
         return itemStackMap;
     }
 
@@ -50,11 +62,19 @@ public class InventoryUtil {
         return isEmpty;
     }
 
-    public static void debugMessageSaveInv(ServerPlayer player) {
-        LocalDateTime now = LocalDateTime.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd-HH-mm-ss");
-        String formattedDateTime = now.format(formatter);
-        InventoryLoggerMod.LOGGER.debug(String.format("The %s saved their inventory: %s",
-                player.getScoreboardName(), formattedDateTime));
+    /**
+     * Check if inventory is empty including Curios slots
+     */
+    public static boolean isEmpty(ServerPlayer player) {
+        if (!isEmpty(player.getInventory())) {
+            return false;
+        }
+
+        // Check Curios inventory if available
+        if (CuriosHelper.isCuriosLoaded()) {
+            return CuriosHelper.isCuriosEmpty(player);
+        }
+
+        return true;
     }
 }

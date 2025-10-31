@@ -1,4 +1,4 @@
-package com.pocky.inv.data;
+package com.pocky.invbackups.data;
 
 import java.util.Objects;
 
