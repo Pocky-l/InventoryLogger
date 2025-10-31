@@ -1,6 +1,7 @@
-package com.pocky.inv.commands;
+package com.pocky.invbackups.commands;
 
 import com.mojang.brigadier.CommandDispatcher;
+import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import net.minecraft.commands.CommandSourceStack;
@@ -8,8 +9,9 @@ import net.minecraft.commands.Commands;
 import net.minecraft.commands.arguments.EntityArgument;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
-import com.pocky.inv.data.InventoryData;
-import com.pocky.inv.io.JsonFileHandler;
+import com.pocky.invbackups.data.InventoryData;
+import com.pocky.invbackups.io.JsonFileHandler;
+import com.pocky.invbackups.ui.ChatUI;
 import net.minecraft.world.Container;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.SimpleContainer;
@@ -20,9 +22,7 @@ import net.minecraft.world.inventory.ChestMenu;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 
-import java.io.File;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class InventoryCommand {
@@ -33,6 +33,15 @@ public class InventoryCommand {
 
         commandDispatcher.register(Commands.literal("inventory")
                 .requires(cs -> cs.hasPermission(2))
+
+                // /inventory help
+                .executes(context -> {
+                    ServerPlayer player = context.getSource().getPlayerOrException();
+                    ChatUI.showHelp(player);
+                    return 1;
+                })
+
+                // /inventory set <player> <backup>
                 .then(Commands.literal("set")
                         .then(Commands.argument("target", EntityArgument.player())
                                 .then(Commands.argument("date", StringArgumentType.string())
@@ -41,6 +50,7 @@ public class InventoryCommand {
                                                         EntityArgument.getPlayer(context, "target"),
                                                         StringArgumentType.getString(context, "date"))))))
 
+                // /inventory view <player> <backup>
                 .then(Commands.literal("view")
                         .then(Commands.argument("target", EntityArgument.player())
                                 .then(Commands.argument("date", StringArgumentType.string())
@@ -49,18 +59,30 @@ public class InventoryCommand {
                                                         EntityArgument.getPlayer(context, "target"),
                                                         StringArgumentType.getString(context, "date"))))))
 
+                // /inventory copy <player> <backup>
+                .then(Commands.literal("copy")
+                        .then(Commands.argument("target", EntityArgument.player())
+                                .then(Commands.argument("date", StringArgumentType.string())
+                                        .executes(context -> command
+                                                .copyInventory(context.getSource(),
+                                                        EntityArgument.getPlayer(context, "target"),
+                                                        StringArgumentType.getString(context, "date"))))))
+
+                // /inventory list <player> [filter] [page]
                 .then(Commands.literal("list")
                         .then(Commands.argument("target", EntityArgument.player())
                                 .executes(context -> command.list(context.getSource(),
                                         EntityArgument.getPlayer(context, "target"),
-                                        ""))
-                        )
-                        .then(Commands.argument("target", EntityArgument.player())
-                                .then(Commands.argument("yyyy-MM-dd-HH-mm", StringArgumentType.string())
+                                        "", 1))
+                                .then(Commands.argument("filter", StringArgumentType.string())
                                         .executes(context -> command.list(context.getSource(),
                                                 EntityArgument.getPlayer(context, "target"),
-                                                StringArgumentType.getString(context, "yyyy-MM-dd-HH-mm")))
-                                )
+                                                StringArgumentType.getString(context, "filter"), 1))
+                                        .then(Commands.argument("page", IntegerArgumentType.integer(1))
+                                                .executes(context -> command.list(context.getSource(),
+                                                        EntityArgument.getPlayer(context, "target"),
+                                                        StringArgumentType.getString(context, "filter"),
+                                                        IntegerArgumentType.getInteger(context, "page")))))
                         )
                 )
         );
@@ -68,84 +90,81 @@ public class InventoryCommand {
     }
 
     public int setInventory(CommandSourceStack source, ServerPlayer target, String date) throws CommandSyntaxException {
-
+        ServerPlayer executor = source.getPlayerOrException();
         InventoryData invData = JsonFileHandler.load("inventory/" + target.getUUID() + "/", date, InventoryData.class);
 
         if (invData == null) {
-            source.getPlayerOrException().displayClientMessage(
-                    Component.literal("§cOops! File not found or was corrupted."),
-                    false
-            );
+            ChatUI.showError(executor, Component.translatable("invbackups.error.backup_not_found", date).getString());
             return 0;
         }
 
         target.getInventory().replaceWith(invData.getInventory(target));
-        target.displayClientMessage(
-                Component.literal("§aSuccess! Your inventory has been replaced with " + date),
-                false
-        );
+        ChatUI.showSuccess(executor, Component.translatable("invbackups.success.restored",
+                Component.literal(date).withStyle(net.minecraft.ChatFormatting.WHITE),
+                Component.literal(target.getScoreboardName()).withStyle(net.minecraft.ChatFormatting.WHITE)).getString());
+        ChatUI.showInfo(target, Component.translatable("invbackups.info.inventory_restored",
+                Component.literal(date).withStyle(net.minecraft.ChatFormatting.WHITE)).getString());
         return 1;
     }
 
-    public int list(CommandSourceStack source, ServerPlayer target, String approximateName) throws CommandSyntaxException {
+    public int copyInventory(CommandSourceStack source, ServerPlayer target, String date) throws CommandSyntaxException {
+        ServerPlayer executor = source.getPlayerOrException();
+        InventoryData invData = JsonFileHandler.load("inventory/" + target.getUUID() + "/", date, InventoryData.class);
 
-        File folder = new File("InventoryLog/inventory/" + target.getUUID() + "/");
-        File[] listOfFiles = folder.listFiles();
+        if (invData == null) {
+            ChatUI.showError(executor, Component.translatable("invbackups.error.backup_not_found", date).getString());
+            return 0;
+        }
 
-
-        source.getPlayerOrException()
-                .displayClientMessage(Component.literal("§aHere is your list of files:"), false);
-
-        boolean isFound = false;
-
-        for (File file : listOfFiles) {
-            if (file.isFile() && file.getName().startsWith(approximateName)) {
-                isFound = true;
-                source.getPlayerOrException()
-                        .displayClientMessage(Component.literal("§3" + file.getName()
-                                .replace(".json", "")), false);
+        // Load the backup items into executor's inventory
+        Inventory executorInv = executor.getInventory();
+        invData.decode(executor.level().registryAccess()).forEach((index, itemStack) -> {
+            if (!itemStack.isEmpty()) {
+                // Try to add item to inventory, drop if full
+                if (!executorInv.add(itemStack.copy())) {
+                    executor.drop(itemStack.copy(), false);
+                }
             }
-        }
+        });
 
-        if (!isFound) {
-            source.getPlayerOrException().displayClientMessage(
-                    Component.literal("§cOops! No file was found."),
-                    false
-            );
-        }
+        ChatUI.showSuccess(executor, Component.translatable("invbackups.success.copied",
+                Component.literal(date).withStyle(net.minecraft.ChatFormatting.WHITE),
+                Component.literal(target.getScoreboardName()).withStyle(net.minecraft.ChatFormatting.WHITE)).getString());
+        return 1;
+    }
 
+    public int list(CommandSourceStack source, ServerPlayer target, String filter, int page) throws CommandSyntaxException {
+        ServerPlayer executor = source.getPlayerOrException();
+        ChatUI.showBackupList(executor, target, filter, page);
         return 1;
     }
 
     public int view(CommandSourceStack source, ServerPlayer target, String date) throws CommandSyntaxException {
-
+        ServerPlayer executor = source.getPlayerOrException();
         InventoryData invData = JsonFileHandler.load("inventory/" + target.getUUID() + "/", date, InventoryData.class);
 
-        ServerPlayer player = source.getPlayer();
-        if (player == null) return 0;
-
         if (invData == null) {
-            source.getPlayerOrException().displayClientMessage(
-                    Component.literal("§cOops! File not found or was corrupted."),
-                    false
-            );
+            ChatUI.showError(executor, Component.translatable("invbackups.error.backup_not_found", date).getString());
             return 0;
         }
 
         Container chestContainer = new SimpleContainer(54);
 
         AtomicInteger slotId = new AtomicInteger();
-        invData.decode().forEach((i, e) -> {
+        invData.decode(executor.level().registryAccess()).forEach((i, e) -> {
             chestContainer.setItem(slotId.get(), e);
             slotId.getAndIncrement();
         });
 
         MenuProvider chestMenuProvider = new SimpleMenuProvider(
                 (id, playerInv, playerEntity) -> new ChestFakeMenu(MenuType.GENERIC_9x6, id, playerInv, chestContainer, 6),
-                Component.literal("View inventory")
+                Component.translatable("invbackups.preview.title", target.getScoreboardName(), date)
+                        .withStyle(style -> style.withColor(net.minecraft.ChatFormatting.GOLD))
         );
 
-        player.openMenu(chestMenuProvider);
+        executor.openMenu(chestMenuProvider);
+        ChatUI.showInfo(executor, Component.translatable("invbackups.info.viewing",
+                Component.literal(date).withStyle(net.minecraft.ChatFormatting.WHITE)).getString());
 
         return 1;
     }

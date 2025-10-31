@@ -1,0 +1,28 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(cmd /c \"gradlew.bat compileJava 2>&1\")",
+      "Bash(powershell -Command \"& .\\gradlew.bat compileJava\")",
+      "Bash(powershell -Command \"& .\\gradlew.bat build\")",
+      "Bash(powershell -Command \"& .\\gradlew.bat jar\")",
+      "Bash(dir:*)",
+      "Bash(cmd /c \"dir build\\libs\")",
+      "Bash(findstr:*)",
+      "Bash(unzip:*)",
+      "WebSearch",
+      "WebFetch(domain:www.curseforge.com)",
+      "Bash(powershell -Command \"Get-ChildItem build\\libs | Format-Table Name,Length\")",
+      "Bash(powershell -Command \"Get-ChildItem build\\libs\\*.jar | Select-Object Name,@{Name=''Size (KB)'';Expression={[math]::Round($_Length/1KB,2)}},LastWriteTime\")",
+      "Bash(powershell:*)",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "Bash(java -version:*)",
+      "Bash(cmd /c \"dir /b \"\"C:\\Program Files\\Java\"\"\")",
+      "Bash(cmd /c \"dir /b\")",
+      "Bash(cmd /c \"del nul\")",
+      "Bash(cmd /c \"del .\\nul\")"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

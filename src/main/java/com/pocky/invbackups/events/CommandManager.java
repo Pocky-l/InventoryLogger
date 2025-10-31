@@ -1,13 +1,11 @@
-package com.pocky.inv.events;
+package com.pocky.invbackups.events;
 
 import com.mojang.brigadier.CommandDispatcher;
-import com.pocky.inv.commands.InventoryCommand;
+import com.pocky.invbackups.commands.InventoryCommand;
 import net.minecraft.commands.CommandSourceStack;
-import net.minecraftforge.event.RegisterCommandsEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
+import net.neoforged.neoforge.event.RegisterCommandsEvent;
+import net.neoforged.bus.api.SubscribeEvent;
 
-@Mod.EventBusSubscriber
 public class CommandManager {
 
     @SubscribeEvent

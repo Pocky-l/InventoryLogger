@@ -1,19 +1,18 @@
-package com.pocky.inv.events;
+package com.pocky.invbackups.events;
 
+import com.pocky.invbackups.InventoryBackupsMod;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
-import com.pocky.inv.data.InventoryData;
-import com.pocky.inv.utils.InventoryUtil;
+import net.neoforged.neoforge.event.tick.PlayerTickEvent;
+import net.neoforged.bus.api.SubscribeEvent;
+import com.pocky.invbackups.data.InventoryData;
+import com.pocky.invbackups.utils.InventoryUtil;
 
 import java.util.HashMap;
 import java.util.Map;
 
-@Mod.EventBusSubscriber
-public class PlayerTickEvent {
+public class PlayerTickHandler {
 
     /**
      * ServerPlayer - игрок. Long - количество тиков.
@@ -25,15 +24,21 @@ public class PlayerTickEvent {
 
     public static Long PERIOD = 60L;
 
+    private static boolean loggedFirst = false;
+
     /**
      * Раз в какое-то время даёт сигнал сохранить инвентарь в файл
      * @param event
      */
     @SubscribeEvent
-    public void onTickPlayerTick(TickEvent.PlayerTickEvent event) {
+    public void onTickPlayerTick(PlayerTickEvent.Post event) {
+        if (!loggedFirst) {
+            loggedFirst = true;
+        }
+
         if (!tickSaveEnabled) return;
-        if (event.side.isServer()) {
-            ServerPlayer player = (ServerPlayer) event.player;
+        if (!event.getEntity().level().isClientSide()) {
+            ServerPlayer player = (ServerPlayer) event.getEntity();
 
             if (!map.containsKey(player)) {
                 map.put(player, 0L);
@@ -51,19 +56,18 @@ public class PlayerTickEvent {
 
     private void saveInventory(ServerPlayer player) {
 
-        Inventory inv = player.getInventory();
+        if (InventoryUtil.isEmpty(player)) {
+            return;
+        }
 
-        if (InventoryUtil.isEmpty(inv)) return;
+        Map<Integer, ItemStack> itemStackMap = InventoryUtil.collectInventory(player);
 
-        Map<Integer, ItemStack> itemStackMap = InventoryUtil.collectInventory(inv);
-
-        var data = InventoryData.encode(itemStackMap);
+        var data = InventoryData.encode(player.level().registryAccess(), itemStackMap);
 
         if (data.equals(lastInventory.get(player))) {
             return;
         }
         lastInventory.put(player, data);
         data.save(player.getUUID(), false);
-        InventoryUtil.debugMessageSaveInv(player);
     }
 }

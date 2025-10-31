@@ -1,0 +1,63 @@
+{
+  "invbackups.prefix": "Inventory",
+  "invbackups.header.backup_list": "BACKUP LIST",
+  "invbackups.header.help": "INVENTORY BACKUPS HELP",
+
+  "invbackups.info.player": "Player: %s",
+  "invbackups.info.total_backups": "Total backups: %s",
+  "invbackups.info.page": "Page: %s/%s",
+
+  "invbackups.filter.quick": "Quick filters:",
+  "invbackups.filter.today": "Today",
+  "invbackups.filter.yesterday": "Yesterday",
+  "invbackups.filter.this_month": "This Month",
+  "invbackups.filter.all": "All",
+
+  "invbackups.filter.hover.today": "Show backups from today",
+  "invbackups.filter.hover.yesterday": "Show backups from yesterday",
+  "invbackups.filter.hover.this_month": "Show backups from this month",
+  "invbackups.filter.hover.all": "Show all backups",
+
+  "invbackups.button.view": "[View]",
+  "invbackups.button.restore": "[Restore]",
+  "invbackups.button.copy": "[Copy]",
+  "invbackups.button.previous": "Previous",
+  "invbackups.button.next": "Next",
+
+  "invbackups.button.hover.view": "Click to preview this backup",
+  "invbackups.button.hover.restore": "Click to restore this backup",
+  "invbackups.button.hover.copy": "Click to copy to your inventory",
+  "invbackups.button.hover.previous": "Go to page %s",
+  "invbackups.button.hover.next": "Go to page %s",
+
+  "invbackups.type.death": "[Death]",
+  "invbackups.type.join": "[Join]",
+  "invbackups.type.quit": "[Quit]",
+  "invbackups.type.auto": "[Auto]",
+
+  "invbackups.error.no_backups": "No backups found for this player",
+  "invbackups.error.no_match": "No backups match the filter: %s",
+  "invbackups.error.backup_not_found": "Backup not found or corrupted: %s",
+
+  "invbackups.success.restored": "Restored backup %s to player %s",
+  "invbackups.success.copied": "Copied items from backup %s of player %s",
+
+  "invbackups.info.inventory_restored": "Your inventory has been restored to: %s",
+  "invbackups.info.viewing": "Viewing backup: %s",
+
+  "invbackups.preview.title": "Preview: %s - %s",
+
+  "invbackups.help.list": "/inventory list <player> [filter] [page]",
+  "invbackups.help.list.desc": "Lists all backups with pagination (10 per page)",
+  "invbackups.help.list.desc2": "Use quick filter buttons: Today, Yesterday, This Month, All",
+  "invbackups.help.view": "/inventory view <player> <backup>",
+  "invbackups.help.view.desc": "Preview a backup in read-only mode",
+  "invbackups.help.set": "/inventory set <player> <backup>",
+  "invbackups.help.set.desc": "Restore a backup to the player",
+  "invbackups.help.copy": "/inventory copy <player> <backup>",
+  "invbackups.help.copy.desc": "Copy backup items to your inventory",
+  "invbackups.help.filters": "Filter examples:",
+  "invbackups.help.filter.month": "2023-03 - All backups from March 2023",
+  "invbackups.help.filter.day": "2023-03-15 - All backups from that day",
+  "invbackups.help.filter.page": "\"\" 2 - Show all backups, page 2"
+}

@@ -2,7 +2,7 @@ plugins {
     id 'eclipse'
     id 'idea'
     id 'maven-publish'
-    id 'net.minecraftforge.gradle' version '[6.0.24,6.2)'
+    id 'net.neoforged.gradle.userdev' version '7.0.180'
 }
 
 version = mod_version
@@ -16,68 +16,62 @@ base {
 java.toolchain.languageVersion = JavaLanguageVersion.of(21)
 
 println "Java: ${System.getProperty 'java.version'}, JVM: ${System.getProperty 'java.vm.version'} (${System.getProperty 'java.vendor'}), Arch: ${System.getProperty 'os.arch'}"
-minecraft {
 
-    mappings channel: mapping_channel, version: mapping_version
+runs {
+    configureEach {
+        systemProperty 'forge.logging.markers', 'REGISTRIES'
+        systemProperty 'forge.logging.console.level', 'debug'
+        modSource project.sourceSets.main
+    }
 
-    reobf = false
+    client {
+        systemProperty 'forge.enabledGameTestNamespaces', project.mod_id
+    }
 
-    copyIdeResources = true
+    server {
+        systemProperty 'forge.enabledGameTestNamespaces', project.mod_id
+        programArgument '--nogui'
+    }
 
-    runs {
-        configureEach {
-            workingDirectory project.file('run')
+    gameTestServer {
+        systemProperty 'forge.enabledGameTestNamespaces', project.mod_id
+    }
 
-            property 'forge.logging.markers', 'REGISTRIES'
-
-            property 'forge.logging.console.level', 'debug'
-        }
-
-        client {
-            property 'forge.enabledGameTestNamespaces', mod_id
-        }
-
-        server {
-            property 'forge.enabledGameTestNamespaces', mod_id
-            args '--nogui'
-        }
-
-        gameTestServer {
-            property 'forge.enabledGameTestNamespaces', mod_id
-        }
-
-        data {
-            workingDirectory project.file('run-data')
-
-            args '--mod', mod_id, '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
-        }
+    data {
+        programArguments.addAll '--mod', project.mod_id, '--all', '--output', file('src/generated/resources/').getAbsolutePath(), '--existing', file('src/main/resources/').getAbsolutePath()
     }
 }
 
 sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 repositories {
-
+    maven {
+        name = "Curios"
+        url = uri("https://maven.theillusivec4.top/")
+    }
 }
 
 dependencies {
+    implementation "net.neoforged:neoforge:${neo_version}"
 
-    minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
-
-    implementation('net.sf.jopt-simple:jopt-simple:5.0.4') { version { strictly '5.0.4' } }
+    // Curios API - now properly supported on NeoForge!
+    // With NeoForge, we can use direct API calls instead of reflection
+    def curiosVersion = "9.5.1+1.21.1"
+    runtimeOnly "top.theillusivec4.curios:curios-neoforge:${curiosVersion}"
+    compileOnly "top.theillusivec4.curios:curios-neoforge:${curiosVersion}:api"
 }
 
 tasks.named('processResources', ProcessResources).configure {
     var replaceProperties = [
             minecraft_version: minecraft_version, minecraft_version_range: minecraft_version_range,
-            forge_version: forge_version, forge_version_range: forge_version_range,
+            neo_version: neo_version, neo_version_range: neo_version_range,
             loader_version_range: loader_version_range,
             mod_id: mod_id, mod_name: mod_name, mod_license: mod_license, mod_version: mod_version,
             mod_authors: mod_authors, mod_description: mod_description,
     ]
     inputs.properties replaceProperties
 
-    filesMatching(['META-INF/mods.toml', 'pack.mcmeta']) {
+    filesMatching(['META-INF/neoforge.mods.toml', 'pack.mcmeta']) {
         expand replaceProperties + [project: project]
     }
 }
@@ -120,4 +114,37 @@ sourceSets.each {
     def dir = layout.buildDirectory.dir("sourcesSets/$it.name")
     it.output.resourcesDir = dir
     it.java.destinationDirectory = dir
+}
+
+// Task to setup mods folder and show Curios installation instructions
+tasks.register('setupTestMods') {
+    group = 'development'
+    description = 'Creates run/mods folder and shows instructions for adding Curios'
+
+    doLast {
+        def modsDir = file('run/mods')
+        modsDir.mkdirs()
+
+        println "\n" + "=".repeat(70)
+        println "Test Mods Folder Setup"
+        println "=".repeat(70)
+        println "\nMods folder created: ${modsDir.absolutePath}"
+        println "\nTo test InventoryBackups with Curios API:"
+        println "  1. Download Curios from one of these sources:"
+        println "     - CurseForge: https://www.curseforge.com/minecraft/mc-mods/curios/files"
+        println "     - Modrinth: https://modrinth.com/mod/curios/versions"
+        println "\n  2. Look for version compatible with Minecraft 1.21.1"
+        println "     (Note: May require NeoForge compatibility layer)"
+        println "\n  3. Place the downloaded JAR file in: ${modsDir.absolutePath}"
+        println "\n  4. Run 'gradlew runClient' to start the game with Curios"
+        println "\n" + "=".repeat(70)
+        println "Current mods in folder:"
+        def modFiles = modsDir.listFiles()?.findAll { it.name.endsWith('.jar') }
+        if (modFiles && !modFiles.isEmpty()) {
+            modFiles.each { println "  ✓ ${it.name}" }
+        } else {
+            println "  (no mods found - add Curios JAR here to test)"
+        }
+        println "=".repeat(70) + "\n"
+    }
 }

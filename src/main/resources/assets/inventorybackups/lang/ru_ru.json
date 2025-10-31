@@ -1,0 +1,63 @@
+{
+  "invbackups.prefix": "Инвентарь",
+  "invbackups.header.backup_list": "СПИСОК РЕЗЕРВНЫХ КОПИЙ",
+  "invbackups.header.help": "СПРАВКА INVENTORY BACKUPS",
+
+  "invbackups.info.player": "Игрок: %s",
+  "invbackups.info.total_backups": "Всего копий: %s",
+  "invbackups.info.page": "Страница: %s/%s",
+
+  "invbackups.filter.quick": "Быстрые фильтры:",
+  "invbackups.filter.today": "Сегодня",
+  "invbackups.filter.yesterday": "Вчера",
+  "invbackups.filter.this_month": "Этот месяц",
+  "invbackups.filter.all": "Все",
+
+  "invbackups.filter.hover.today": "Показать копии за сегодня",
+  "invbackups.filter.hover.yesterday": "Показать копии за вчера",
+  "invbackups.filter.hover.this_month": "Показать копии за этот месяц",
+  "invbackups.filter.hover.all": "Показать все копии",
+
+  "invbackups.button.view": "[Просмотр]",
+  "invbackups.button.restore": "[Восстановить]",
+  "invbackups.button.copy": "[Копировать]",
+  "invbackups.button.previous": "Назад",
+  "invbackups.button.next": "Вперёд",
+
+  "invbackups.button.hover.view": "Нажмите для предпросмотра",
+  "invbackups.button.hover.restore": "Нажмите для восстановления",
+  "invbackups.button.hover.copy": "Нажмите для копирования в ваш инвентарь",
+  "invbackups.button.hover.previous": "Перейти на страницу %s",
+  "invbackups.button.hover.next": "Перейти на страницу %s",
+
+  "invbackups.type.death": "[Смерть]",
+  "invbackups.type.join": "[Вход]",
+  "invbackups.type.quit": "[Выход]",
+  "invbackups.type.auto": "[Авто]",
+
+  "invbackups.error.no_backups": "Резервные копии для этого игрока не найдены",
+  "invbackups.error.no_match": "Копии не соответствуют фильтру: %s",
+  "invbackups.error.backup_not_found": "Копия не найдена или повреждена: %s",
+
+  "invbackups.success.restored": "Восстановлена копия %s игроку %s",
+  "invbackups.success.copied": "Скопированы предметы из копии %s игрока %s",
+
+  "invbackups.info.inventory_restored": "Ваш инвентарь был восстановлен до: %s",
+  "invbackups.info.viewing": "Просмотр копии: %s",
+
+  "invbackups.preview.title": "Просмотр: %s - %s",
+
+  "invbackups.help.list": "/inventory list <игрок> [фильтр] [страница]",
+  "invbackups.help.list.desc": "Показывает все копии с пагинацией (10 на странице)",
+  "invbackups.help.list.desc2": "Используйте быстрые фильтры: Сегодня, Вчера, Этот месяц, Все",
+  "invbackups.help.view": "/inventory view <игрок> <копия>",
+  "invbackups.help.view.desc": "Предпросмотр копии в режиме только чтения",
+  "invbackups.help.set": "/inventory set <игрок> <копия>",
+  "invbackups.help.set.desc": "Восстановить копию игроку",
+  "invbackups.help.copy": "/inventory copy <игрок> <копия>",
+  "invbackups.help.copy.desc": "Скопировать предметы в ваш инвентарь",
+  "invbackups.help.filters": "Примеры фильтров:",
+  "invbackups.help.filter.month": "2023-03 - Все копии за март 2023",
+  "invbackups.help.filter.day": "2023-03-15 - Все копии за этот день",
+  "invbackups.help.filter.page": "\"\" 2 - Показать все копии, страница 2"
+}
