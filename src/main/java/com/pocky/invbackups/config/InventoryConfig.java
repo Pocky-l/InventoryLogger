@@ -25,6 +25,14 @@ public class InventoryConfig {
         public final ModConfigSpec.BooleanValue quitSaveEnabled;
         public final ModConfigSpec.IntValue retentionDays;
 
+        // Ender Chest settings
+        public final ModConfigSpec.BooleanValue enderChestEnabled;
+        public final ModConfigSpec.BooleanValue enderChestTickSaveEnabled;
+        public final ModConfigSpec.BooleanValue enderChestDeadSaveEnabled;
+        public final ModConfigSpec.BooleanValue enderChestJoinSaveEnabled;
+        public final ModConfigSpec.BooleanValue enderChestQuitSaveEnabled;
+        public final ModConfigSpec.BooleanValue enderChestOpenSaveEnabled;
+
         General() {
             COMMON_BUILDER.push("general");
 
@@ -51,6 +59,34 @@ public class InventoryConfig {
             this.retentionDays = COMMON_BUILDER
                     .comment("Number of days to keep backup files. Older backups will be automatically deleted. 7 - keep for 7 days.")
                     .defineInRange("retentionDays", 7, 1, 365);
+
+            COMMON_BUILDER.pop();
+
+            COMMON_BUILDER.push("enderchest");
+
+            this.enderChestEnabled = COMMON_BUILDER
+                    .comment("true - enable ender chest backup functionality")
+                    .define("enderChestEnabled", true);
+
+            this.enderChestTickSaveEnabled = COMMON_BUILDER
+                    .comment("true - saves ender chest every N seconds (uses preservationPeriod)")
+                    .define("enderChestTickSaveEnabled", true);
+
+            this.enderChestDeadSaveEnabled = COMMON_BUILDER
+                    .comment("true - saves ender chest on death")
+                    .define("enderChestDeadSaveEnabled", true);
+
+            this.enderChestJoinSaveEnabled = COMMON_BUILDER
+                    .comment("true - saves ender chest when player joins the server")
+                    .define("enderChestJoinSaveEnabled", true);
+
+            this.enderChestQuitSaveEnabled = COMMON_BUILDER
+                    .comment("true - saves ender chest when player quits the server")
+                    .define("enderChestQuitSaveEnabled", true);
+
+            this.enderChestOpenSaveEnabled = COMMON_BUILDER
+                    .comment("true - saves ender chest when player opens it")
+                    .define("enderChestOpenSaveEnabled", false);
 
             COMMON_BUILDER.pop();
         }

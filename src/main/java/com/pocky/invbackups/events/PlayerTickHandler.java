@@ -1,13 +1,16 @@
 package com.pocky.invbackups.events;
 
 import com.pocky.invbackups.InventoryBackupsMod;
+import com.pocky.invbackups.config.InventoryConfig;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 import net.neoforged.bus.api.SubscribeEvent;
 import com.pocky.invbackups.data.InventoryData;
+import com.pocky.invbackups.data.EnderChestData;
 import com.pocky.invbackups.utils.InventoryUtil;
+import com.pocky.invbackups.utils.EnderChestUtil;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -19,8 +22,10 @@ public class PlayerTickHandler {
      */
     Map<ServerPlayer, Long> map = new HashMap<>();
     Map<ServerPlayer, InventoryData> lastInventory = new HashMap<>();
+    Map<ServerPlayer, EnderChestData> lastEnderChest = new HashMap<>();
 
     public static boolean tickSaveEnabled = false;
+    public static boolean enderChestTickSaveEnabled = false;
 
     public static Long PERIOD = 60L;
 
@@ -49,6 +54,7 @@ public class PlayerTickHandler {
 
             if ((map.get(player) / 20) >= PERIOD) {
                 saveInventory(player);
+                saveEnderChest(player);
                 map.put(player, 0L);
             }
         }
@@ -68,6 +74,30 @@ public class PlayerTickHandler {
             return;
         }
         lastInventory.put(player, data);
+        data.save(player.getUUID(), false);
+    }
+
+    private void saveEnderChest(ServerPlayer player) {
+        if (!enderChestTickSaveEnabled) {
+            return;
+        }
+
+        if (!InventoryConfig.general.enderChestEnabled.get()) {
+            return;
+        }
+
+        if (EnderChestUtil.isEmpty(player)) {
+            return;
+        }
+
+        Map<Integer, ItemStack> itemStackMap = EnderChestUtil.collectEnderChest(player);
+
+        var data = EnderChestData.encode(player.level().registryAccess(), itemStackMap);
+
+        if (data.equals(lastEnderChest.get(player))) {
+            return;
+        }
+        lastEnderChest.put(player, data);
         data.save(player.getUUID(), false);
     }
 }

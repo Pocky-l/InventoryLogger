@@ -38,26 +38,64 @@
   "invbackups.error.no_backups": "Резервные копии для этого игрока не найдены",
   "invbackups.error.no_match": "Копии не соответствуют фильтру: %s",
   "invbackups.error.backup_not_found": "Копия не найдена или повреждена: %s",
+  "invbackups.error.player_not_found": "Игрок не найден: %s",
+  "invbackups.error.player_offline_cannot_restore": "Невозможно восстановить инвентарь - игрок %s не в сети",
+  "invbackups.error.player_offline_cannot_view": "Невозможно просмотреть инвентарь - игрок %s не в сети",
 
   "invbackups.success.restored": "Восстановлена копия %s игроку %s",
   "invbackups.success.copied": "Скопированы предметы из копии %s игрока %s",
+  "invbackups.success.player_inventory_updated": "Обновлён инвентарь игрока %s",
 
   "invbackups.info.inventory_restored": "Ваш инвентарь был восстановлен до: %s",
   "invbackups.info.viewing": "Просмотр копии: %s",
+  "invbackups.info.viewing_player": "Просмотр и редактирование инвентаря игрока: %s",
 
   "invbackups.preview.title": "Просмотр: %s - %s",
+  "invbackups.player.title": "Инвентарь игрока: %s",
 
+  "invbackups.help.player": "/inventory player <игрок>",
+  "invbackups.help.player.desc": "Просмотр и редактирование текущего инвентаря игрока (только онлайн)",
   "invbackups.help.list": "/inventory list <игрок> [фильтр] [страница]",
   "invbackups.help.list.desc": "Показывает все копии с пагинацией (10 на странице)",
   "invbackups.help.list.desc2": "Используйте быстрые фильтры: Сегодня, Вчера, Этот месяц, Все",
   "invbackups.help.view": "/inventory view <игрок> <копия>",
   "invbackups.help.view.desc": "Предпросмотр копии в режиме только чтения",
   "invbackups.help.set": "/inventory set <игрок> <копия>",
-  "invbackups.help.set.desc": "Восстановить копию игроку",
+  "invbackups.help.set.desc": "Восстановить копию игроку (только онлайн)",
   "invbackups.help.copy": "/inventory copy <игрок> <копия>",
   "invbackups.help.copy.desc": "Скопировать предметы в ваш инвентарь",
   "invbackups.help.filters": "Примеры фильтров:",
   "invbackups.help.filter.month": "2023-03 - Все копии за март 2023",
   "invbackups.help.filter.day": "2023-03-15 - Все копии за этот день",
-  "invbackups.help.filter.page": "\"\" 2 - Показать все копии, страница 2"
+  "invbackups.help.filter.page": "\"\" 2 - Показать все копии, страница 2",
+
+  "invbackups.enderchest.header.backup_list": "СПИСОК РЕЗЕРВНЫХ КОПИЙ ЭНДЕР-СУНДУКА",
+  "invbackups.enderchest.header.help": "СПРАВКА ПО БЕКАПАМ ЭНДЕР-СУНДУКА",
+
+  "invbackups.enderchest.info.total_backups": "Всего копий эндер-сундука: %s",
+
+  "invbackups.error.no_enderchest_backups": "Резервные копии эндер-сундука для этого игрока не найдены",
+  "invbackups.error.enderchest_disabled": "Резервные копии эндер-сундука отключены в конфигурации",
+
+  "invbackups.success.enderchest_restored": "Восстановлена копия эндер-сундука %s игроку %s",
+  "invbackups.success.enderchest_copied": "Скопированы предметы из копии эндер-сундука %s игрока %s",
+  "invbackups.success.enderchest_updated": "Обновлён эндер-сундук игрока %s",
+
+  "invbackups.info.enderchest_restored": "Ваш эндер-сундук был восстановлен до: %s",
+  "invbackups.info.viewing_enderchest": "Просмотр копии эндер-сундука: %s",
+  "invbackups.info.viewing_enderchest_player": "Просмотр и редактирование эндер-сундука игрока: %s",
+
+  "invbackups.enderchest.preview.title": "Просмотр эндер-сундука: %s - %s",
+  "invbackups.enderchest.player.title": "Эндер-сундук: %s",
+
+  "invbackups.enderchest.help.player": "/enderchest player <игрок>",
+  "invbackups.enderchest.help.player.desc": "Просмотр и редактирование текущего эндер-сундука игрока (только онлайн)",
+  "invbackups.enderchest.help.list": "/enderchest list <игрок> [фильтр] [страница]",
+  "invbackups.enderchest.help.list.desc": "Показывает все копии эндер-сундука с пагинацией (10 на странице)",
+  "invbackups.enderchest.help.view": "/enderchest view <игрок> <копия>",
+  "invbackups.enderchest.help.view.desc": "Предпросмотр копии эндер-сундука в режиме только чтения",
+  "invbackups.enderchest.help.set": "/enderchest set <игрок> <копия>",
+  "invbackups.enderchest.help.set.desc": "Восстановить копию эндер-сундука игроку (только онлайн)",
+  "invbackups.enderchest.help.copy": "/enderchest copy <игрок> <копия>",
+  "invbackups.enderchest.help.copy.desc": "Скопировать предметы из копии эндер-сундука в ваш инвентарь"
 }

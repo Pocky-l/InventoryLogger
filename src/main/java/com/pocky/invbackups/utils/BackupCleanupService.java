@@ -13,7 +13,8 @@ import java.time.temporal.ChronoUnit;
 
 public class BackupCleanupService {
 
-    private static final Path BACKUP_DIR = Path.of("InventoryLog/inventory/");
+    private static final Path INVENTORY_BACKUP_DIR = Path.of("InventoryLog/inventory/");
+    private static final Path ENDERCHEST_BACKUP_DIR = Path.of("InventoryLog/enderchest/");
 
     /**
      * Deletes backup files older than the configured retention period
@@ -22,17 +23,28 @@ public class BackupCleanupService {
         int retentionDays = InventoryConfig.general.retentionDays.get();
         Instant cutoffTime = Instant.now().minus(retentionDays, ChronoUnit.DAYS);
 
-        File backupDir = BACKUP_DIR.toFile();
-        if (!backupDir.exists() || !backupDir.isDirectory()) {
-            return;
+        int inventoryDeleted = cleanupDirectory(INVENTORY_BACKUP_DIR, cutoffTime);
+        int enderChestDeleted = cleanupDirectory(ENDERCHEST_BACKUP_DIR, cutoffTime);
+
+        int totalDeleted = inventoryDeleted + enderChestDeleted;
+        if (totalDeleted > 0) {
+            InventoryBackupsMod.LOGGER.info("Backup cleanup completed: deleted " + inventoryDeleted +
+                " inventory backup(s) and " + enderChestDeleted + " ender chest backup(s)");
+        }
+    }
+
+    private static int cleanupDirectory(Path backupDir, Instant cutoffTime) {
+        File backupDirFile = backupDir.toFile();
+        if (!backupDirFile.exists() || !backupDirFile.isDirectory()) {
+            return 0;
         }
 
         int deletedCount = 0;
         int errorCount = 0;
 
         // Iterate through player UUID directories
-        File[] playerDirs = backupDir.listFiles(File::isDirectory);
-        if (playerDirs == null) return;
+        File[] playerDirs = backupDirFile.listFiles(File::isDirectory);
+        if (playerDirs == null) return 0;
 
         for (File playerDir : playerDirs) {
             File[] backupFiles = playerDir.listFiles((dir, name) -> name.endsWith(".json"));
@@ -66,12 +78,11 @@ public class BackupCleanupService {
             }
         }
 
-        if (deletedCount > 0) {
-            InventoryBackupsMod.LOGGER.info("Backup cleanup completed: deleted " + deletedCount + " old backup(s)");
-        }
         if (errorCount > 0) {
-            InventoryBackupsMod.LOGGER.warn("Backup cleanup had " + errorCount + " error(s)");
+            InventoryBackupsMod.LOGGER.warn("Backup cleanup had " + errorCount + " error(s) in " + backupDir);
         }
+
+        return deletedCount;
     }
 
     /**

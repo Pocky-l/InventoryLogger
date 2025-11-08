@@ -38,26 +38,64 @@
   "invbackups.error.no_backups": "No backups found for this player",
   "invbackups.error.no_match": "No backups match the filter: %s",
   "invbackups.error.backup_not_found": "Backup not found or corrupted: %s",
+  "invbackups.error.player_not_found": "Player not found: %s",
+  "invbackups.error.player_offline_cannot_restore": "Cannot restore inventory - player %s is offline",
+  "invbackups.error.player_offline_cannot_view": "Cannot view inventory - player %s is offline",
 
   "invbackups.success.restored": "Restored backup %s to player %s",
   "invbackups.success.copied": "Copied items from backup %s of player %s",
+  "invbackups.success.player_inventory_updated": "Updated inventory for player %s",
 
   "invbackups.info.inventory_restored": "Your inventory has been restored to: %s",
   "invbackups.info.viewing": "Viewing backup: %s",
+  "invbackups.info.viewing_player": "Viewing and editing inventory of player: %s",
 
   "invbackups.preview.title": "Preview: %s - %s",
+  "invbackups.player.title": "Player Inventory: %s",
 
+  "invbackups.help.player": "/inventory player <player>",
+  "invbackups.help.player.desc": "View and edit current player inventory (online only)",
   "invbackups.help.list": "/inventory list <player> [filter] [page]",
   "invbackups.help.list.desc": "Lists all backups with pagination (10 per page)",
   "invbackups.help.list.desc2": "Use quick filter buttons: Today, Yesterday, This Month, All",
   "invbackups.help.view": "/inventory view <player> <backup>",
   "invbackups.help.view.desc": "Preview a backup in read-only mode",
   "invbackups.help.set": "/inventory set <player> <backup>",
-  "invbackups.help.set.desc": "Restore a backup to the player",
+  "invbackups.help.set.desc": "Restore a backup to the player (online only)",
   "invbackups.help.copy": "/inventory copy <player> <backup>",
   "invbackups.help.copy.desc": "Copy backup items to your inventory",
   "invbackups.help.filters": "Filter examples:",
   "invbackups.help.filter.month": "2023-03 - All backups from March 2023",
   "invbackups.help.filter.day": "2023-03-15 - All backups from that day",
-  "invbackups.help.filter.page": "\"\" 2 - Show all backups, page 2"
+  "invbackups.help.filter.page": "\"\" 2 - Show all backups, page 2",
+
+  "invbackups.enderchest.header.backup_list": "ENDER CHEST BACKUP LIST",
+  "invbackups.enderchest.header.help": "ENDER CHEST BACKUPS HELP",
+
+  "invbackups.enderchest.info.total_backups": "Total ender chest backups: %s",
+
+  "invbackups.error.no_enderchest_backups": "No ender chest backups found for this player",
+  "invbackups.error.enderchest_disabled": "Ender chest backups are disabled in config",
+
+  "invbackups.success.enderchest_restored": "Restored ender chest backup %s to player %s",
+  "invbackups.success.enderchest_copied": "Copied items from ender chest backup %s of player %s",
+  "invbackups.success.enderchest_updated": "Updated ender chest for player %s",
+
+  "invbackups.info.enderchest_restored": "Your ender chest has been restored to: %s",
+  "invbackups.info.viewing_enderchest": "Viewing ender chest backup: %s",
+  "invbackups.info.viewing_enderchest_player": "Viewing and editing ender chest of player: %s",
+
+  "invbackups.enderchest.preview.title": "Ender Chest Preview: %s - %s",
+  "invbackups.enderchest.player.title": "Ender Chest: %s",
+
+  "invbackups.enderchest.help.player": "/enderchest player <player>",
+  "invbackups.enderchest.help.player.desc": "View and edit current player ender chest (online only)",
+  "invbackups.enderchest.help.list": "/enderchest list <player> [filter] [page]",
+  "invbackups.enderchest.help.list.desc": "Lists all ender chest backups with pagination (10 per page)",
+  "invbackups.enderchest.help.view": "/enderchest view <player> <backup>",
+  "invbackups.enderchest.help.view.desc": "Preview an ender chest backup in read-only mode",
+  "invbackups.enderchest.help.set": "/enderchest set <player> <backup>",
+  "invbackups.enderchest.help.set.desc": "Restore an ender chest backup to the player (online only)",
+  "invbackups.enderchest.help.copy": "/enderchest copy <player> <backup>",
+  "invbackups.enderchest.help.copy.desc": "Copy ender chest backup items to your inventory"
 }
